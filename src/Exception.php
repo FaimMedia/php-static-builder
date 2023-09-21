@@ -29,4 +29,9 @@ class Exception extends BaseException implements Throwable
 	 * Invalid target
 	 */
 	public const INVALID_TARGET = -4;
+
+	/**
+	 * No log is available
+	 */
+	public const NO_LOG = -5;
 }

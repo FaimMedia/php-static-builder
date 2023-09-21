@@ -17,6 +17,7 @@ use FaimMedia\StaticBuilder\Action\{
 $builder = new Build([
 	'target' => './dist',
 	'router' => './public/router.php',
+	'log'    => './cache/server.log',
 ]);
 
 $builder->addAction(

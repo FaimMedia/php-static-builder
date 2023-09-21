@@ -17,6 +17,7 @@ class Build
 	protected $target;
 	protected $port = 9000;
 	protected $router;
+	protected $log = '/dev/null';
 
 	/**
 	 * Constructor
@@ -74,7 +75,7 @@ class Build
 
 		echo 'Starting webserver' . PHP_EOL;
 
-		$this->_pid = (int) exec('php -S ' . escapeshellarg('127.0.0.1:' . $this->port) . ' ' . escapeshellarg($this->router) . ' > /dev/null 2>&1 & echo $!;', $output);
+		$this->_pid = (int) exec('php -S ' . escapeshellarg('127.0.0.1:' . $this->port) . ' ' . escapeshellarg($this->router) . ' > ' . escapeshellarg($this->log) . ' 2>&1 & echo $!;', $output);
 
 		sleep(1);
 
@@ -87,6 +88,24 @@ class Build
 		foreach ($this->_actions as $action) {
 			$action->execute();
 		}
+	}
+
+	/**
+	 * Get log
+	 */
+	public function getLog(): ?string
+	{
+		if (!$this->log || $this->log === '/dev/null') {
+			throw new Exception('No log available', Exception::NO_LOG);
+		}
+
+		$file = $this->log;
+
+		$fopen = fopen($file, 'r');
+		$content = fread($fopen, filesize($file));
+		fclose($fopen);
+
+		return $content;
 	}
 
 	/**
