@@ -1,0 +1,25 @@
+{
+	"name": "faimmedia/static-builder",
+	"description": "PHP Static Build generator",
+	"homepage": "https://faimmedia.nl",
+
+	"authors": [{
+		"name": "Tim Peters",
+		"role": "Lead Developer"
+	}],
+
+	"require": {
+		"php": "8.*",
+
+		"ext-curl" : "*",
+		"ext-json" : "*",
+
+		"php-curl-class/php-curl-class": "^9.18"
+	},
+
+	"autoload": {
+		"psr-4": {
+			"FaimMedia\\StaticBuilder\\": "src/"
+		}
+	}
+}
