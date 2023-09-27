@@ -9,6 +9,8 @@ use FaimMedia\StaticBuilder\Exception as BaseException;
  */
 class Exception extends BaseException
 {
+	protected $url;
+
 	/**
 	 * Invalid option specified
 	 */
@@ -28,4 +30,22 @@ class Exception extends BaseException
 	 * Unexpected curl http status code
 	 */
 	public const UNEXPECTED_STATUS_CODE = -4;
+
+	/**
+	 * Get url
+	 */
+	public function getUrl(): ?string
+	{
+		return $this->url;
+	}
+
+	/**
+	 * Set url
+	 */
+	public function setUrl(?string $uri = null): self
+	{
+		$this->url = $url;
+
+		return $this;
+	}
 }
