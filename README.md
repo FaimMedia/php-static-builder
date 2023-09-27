@@ -2,6 +2,12 @@
 
 This repository will launch a internal webserver of your PHP project, collects pages and copy files to a directory of your chosing.
 
+## Install
+
+Install this library using composer:
+
+    composer require faimmedia/static-builder 
+
 ## Example
 
 ```php
