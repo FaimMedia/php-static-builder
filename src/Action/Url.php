@@ -75,13 +75,17 @@ class Url extends AbstractAction implements ActionInterface
 			echo ' - Completed ' . $this->url . ' [response code: ' . $statusCode . ']' . PHP_EOL;
 
 			if ($statusCode !== $this->expect) {
-				throw new Exception('Invalid status code returned, expected ' . $this->expect . ', got ' . $statusCode, Exception::UNEXPECTED_STATUS_CODE);
+				$e = new Exception('Invalid status code returned, expected ' . $this->expect . ', got ' . $statusCode, Exception::UNEXPECTED_STATUS_CODE);
+				$e->setUrl($this->url);
+				throw $e;
 			}
 
 			$response = $curl->getResponse();
 
 			if (!$response) {
-				throw new Exception('Invalid response for `' . $this->url . '`', Exception::INVALID_RESPONSE);
+				$e = new Exception('Invalid response for `' . $this->url . '`', Exception::INVALID_RESPONSE);
+				$e->setUrl($this->url);
+				throw $e;
 			}
 
 			if (!$this->save) {
