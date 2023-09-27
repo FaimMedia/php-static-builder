@@ -31,7 +31,7 @@ class CombineUrl extends AbstractAction implements ActionInterface
 
 		$this->_multi = new MultiCurl();
 
-		if ($this->rateLimit) {
+		if ($this->rateLimit && $this->rateLimit !== 1) {
 			$this->_multi->setRateLimit($this->rateLimit);
 		}
 
@@ -81,11 +81,17 @@ class CombineUrl extends AbstractAction implements ActionInterface
 					throw new Exception('Url action should return `' . Curl::class . '` for combining');
 				}
 
-				$this->_multi->addCurl($curl);
+				if ($this->rateLimit === 1) {
+					$curl->exec();
+				} else {
+					$this->_multi->addCurl($curl);
+				}
 			}
 		}
 
-		$this->_multi->start();
+		if ($this->rateLimit !== 1) {
+			$this->_multi->start();
+		}
 
 		return true;
 	}
