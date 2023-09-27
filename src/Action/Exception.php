@@ -42,7 +42,7 @@ class Exception extends BaseException
 	/**
 	 * Set url
 	 */
-	public function setUrl(?string $uri = null): self
+	public function setUrl(?string $url = null): self
 	{
 		$this->url = $url;
 
