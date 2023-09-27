@@ -17,6 +17,7 @@ class CombineUrl extends AbstractAction implements ActionInterface
 	protected $encoding;
 	protected $hostname;
 	protected $path;
+	protected $rateLimit;
 
 	protected MultiCurl $_multi;
 	protected array $_urls = [];
@@ -29,6 +30,10 @@ class CombineUrl extends AbstractAction implements ActionInterface
 		parent::__construct($options);
 
 		$this->_multi = new MultiCurl();
+
+		if ($this->rateLimit) {
+			$this->_multi->setRateLimit($this->rateLimit);
+		}
 
 		foreach ($urls as $url) {
 			$this->addUrl($url);
