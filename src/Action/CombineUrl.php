@@ -56,7 +56,7 @@ class CombineUrl extends AbstractAction implements ActionInterface
 	public function execute(?bool $start = null): mixed
 	{
 		foreach ($this->_urls as $url) {
-			$encoding = $this->encoding;
+			$encoding = $this->encoding ?? [];
 			if (!is_array($encoding)) {
 				$encoding = [$encoding ?? null];
 			}
