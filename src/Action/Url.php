@@ -17,6 +17,7 @@ class Url extends AbstractAction implements ActionInterface
 	protected $filename;
 	protected $save = true;
 	protected $expect = 200;
+	protected int $maxRetry = 3;
 
 	/**
 	 * Get encoding
@@ -69,6 +70,20 @@ class Url extends AbstractAction implements ActionInterface
 		}
 
 		$curl->setUrl('http://127.0.0.1:' . $this->port . '/' . $this->url);
+		$curl->setRetry($this->maxRetry);
+		$curl->setRetry(function (Curl $curl): bool {
+			if ($curl->getHttpStatusCode() === $this->expect) {
+				return false;
+			}
+
+			echo '   - Unexpected status code, retrying in 1 second (' . $curl->remainingRetries . ')...' . PHP_EOL;
+
+			$curl->remainingRetries--;
+
+			sleep(1);
+
+			return $curl->remainingRetries >= 1;
+		});
 		$curl->complete(function (Curl $curl): void {
 			$statusCode = $curl->getHttpStatusCode();
 
