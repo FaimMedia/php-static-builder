@@ -95,7 +95,7 @@ class Url extends AbstractAction implements ActionInterface
 				throw $e;
 			}
 
-			$response = $curl->getResponse();
+			$response = $curl->getRawResponse();
 
 			if (!$response) {
 				$e = new Exception('Invalid response for `' . $this->url . '`', Exception::INVALID_RESPONSE);
